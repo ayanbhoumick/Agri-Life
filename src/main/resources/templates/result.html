@@ -47,6 +47,43 @@
 
             <hr class="divider">
 
+            <!-- Weather card -->
+            <div class="weather-card" th:if="${weatherData != null}">
+                <div class="weather-header">
+                    <span class="weather-icon">🌤</span>
+                    <span class="weather-city" th:text="'Weather in ' + ${weatherData.city}">Weather</span>
+                </div>
+                <div class="weather-conditions">
+                    <span th:text="${weatherData.temperature} + '°C'">—</span>
+                    <span class="weather-sep">·</span>
+                    <span th:text="${weatherData.precipitation} + 'mm precipitation'">—</span>
+                </div>
+                <div class="weather-risk" th:if="${!weatherData.riskPests.isEmpty()}">
+                    <span class="risk-label">⚠ High-Risk Pests:</span>
+                    <span th:each="pest, stat : ${weatherData.riskPests}"
+                          th:text="${pest} + (${stat.last} ? '' : ' · ')">—</span>
+                </div>
+                <div class="weather-no-risk" th:if="${weatherData.riskPests.isEmpty()}">
+                    ✓ No high-risk pests for current conditions
+                </div>
+            </div>
+
+            <!-- Stats row -->
+            <div class="stats-row" th:if="${totalReports > 0}">
+                <div class="stat-item">
+                    <span class="stat-value" th:text="${totalReports}">0</span>
+                    <span class="stat-label">Total Reports</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" th:text="${mostCommonPest}">—</span>
+                    <span class="stat-label">Most Common Pest</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" th:text="${avgDeliveryTime} + ' min'">—</span>
+                    <span class="stat-label">Avg Delivery</span>
+                </div>
+            </div>
+
             <!-- Farmer details -->
             <div class="result-section">
                 <h3>Farmer Details</h3>
