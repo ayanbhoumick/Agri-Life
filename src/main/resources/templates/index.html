@@ -17,52 +17,106 @@
 
     <main>
         <div class="card">
-            <h2>Pest Report Form</h2>
 
-            <form th:action="@{/recommend}" th:object="${farmerForm}" method="post">
-
-                <div class="form-group">
-                    <label for="name">Farmer Name</label>
-                    <input type="text" id="name" th:field="*{name}"
-                           placeholder="e.g. John Mwangi" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" th:field="*{phone}"
-                           placeholder="e.g. +254 712 345 678" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="pestName">Pest Detected</label>
-                    <select id="pestName" th:field="*{pestName}" required>
-                        <option value="">— Select pest —</option>
-                        <option value="aphids">Aphids</option>
-                        <option value="armyworm">Armyworm</option>
-                        <option value="whitefly">Whitefly</option>
-                        <option value="thrips">Thrips</option>
-                        <option value="mites">Mites / Spider Mites</option>
-                        <option value="locusts">Locusts</option>
-                        <option value="cutworm">Cutworm</option>
-                    </select>
-                </div>
-
-                <hr class="divider">
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="distance">Distance to Farm (km)</label>
-                        <input type="number" id="distance" th:field="*{distance}"
-                               min="0" step="0.1" placeholder="e.g. 15" required>
+            <!-- Progress Bar -->
+            <div class="progress-wrapper">
+                <div class="steps-row">
+                    <div class="progress-step">
+                        <div class="step-dot active" id="dot-1">1</div>
                     </div>
-                    <div class="form-group">
-                        <label for="speed">Delivery Speed (km/h)</label>
-                        <input type="number" id="speed" th:field="*{speed}"
-                               min="1" step="0.1" placeholder="e.g. 60" required>
+                    <div class="step-line" id="line-1"></div>
+                    <div class="progress-step">
+                        <div class="step-dot" id="dot-2">2</div>
+                    </div>
+                    <div class="step-line" id="line-2"></div>
+                    <div class="progress-step">
+                        <div class="step-dot" id="dot-3">3</div>
+                    </div>
+                    <div class="step-line" id="line-3"></div>
+                    <div class="progress-step">
+                        <div class="step-dot" id="dot-4">4</div>
                     </div>
                 </div>
+                <div class="labels-row">
+                    <span class="step-label">Info</span>
+                    <span class="step-label">Crop</span>
+                    <span class="step-label">Pest</span>
+                    <span class="step-label">Delivery</span>
+                </div>
+            </div>
 
-                <button type="submit" class="btn-primary">Get Recommendation →</button>
+            <form th:action="@{/recommend}" th:object="${farmerForm}" method="post" id="wizard-form">
+
+                <!-- Hidden fields populated by JS -->
+                <input type="hidden" th:field="*{cropName}" id="hidden-cropName">
+                <input type="hidden" th:field="*{pestName}" id="hidden-pestName">
+
+                <!-- Step 1: Farmer Info -->
+                <div class="wizard-panel active" id="step-1">
+                    <h2>Your Details</h2>
+                    <div class="form-group">
+                        <label for="name">Farmer Name</label>
+                        <input type="text" id="name" th:field="*{name}"
+                               placeholder="e.g. Rajesh Kumar">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" th:field="*{phone}"
+                               placeholder="e.g. +91 98765 43210">
+                    </div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-next" onclick="goStep(2)">Next →</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Crop Selection -->
+                <div class="wizard-panel" id="step-2">
+                    <h2>Select Your Crop</h2>
+                    <div class="crop-grid" id="crop-grid">
+                        <div th:each="crop : ${crops}"
+                             class="crop-card"
+                             th:attr="data-crop=${crop.name}, onclick='selectCrop(this)'">
+                            <span class="crop-emoji" th:text="${crop.emoji}">🌾</span>
+                            <span class="crop-name" th:text="${crop.name}">Crop</span>
+                        </div>
+                    </div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-back" onclick="goStep(1)">← Back</button>
+                        <button type="button" class="btn-next" id="next-2" disabled onclick="goStep(3)">Next →</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Pest Selection -->
+                <div class="wizard-panel" id="step-3">
+                    <h2>Pest Detected</h2>
+                    <div class="pest-grid" id="pest-grid"></div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-back" onclick="goStep(2)">← Back</button>
+                        <button type="button" class="btn-next" id="next-3" disabled onclick="goStep(4)">Next →</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Delivery -->
+                <div class="wizard-panel" id="step-4">
+                    <h2>Delivery Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="distance">Distance to Farm (km)</label>
+                            <input type="number" id="distance" th:field="*{distance}"
+                                   min="0" step="0.1" placeholder="e.g. 15" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="speed">Delivery Speed (km/h)</label>
+                            <input type="number" id="speed" th:field="*{speed}"
+                                   min="1" step="0.1" placeholder="e.g. 60" required>
+                        </div>
+                    </div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-back" onclick="goStep(3)">← Back</button>
+                        <button type="submit" class="btn-next">Get Recommendation →</button>
+                    </div>
+                </div>
+
             </form>
         </div>
     </main>
@@ -70,5 +124,72 @@
     <footer>
         AgriLife Pest Management System &copy; 2026
     </footer>
+
+    <script th:inline="javascript">
+        const cropPestMap = /*[[${cropPestMap}]]*/ {};
+        const pestPhotoMap = /*[[${pestPhotoMap}]]*/ {};
+
+        let currentStep = 1;
+        let selectedCrop = null;
+        let selectedPest = null;
+
+        function goStep(n) {
+            document.getElementById('step-' + currentStep).classList.remove('active');
+            currentStep = n;
+            document.getElementById('step-' + n).classList.add('active');
+            updateProgress();
+            if (n === 3) buildPestGrid();
+        }
+
+        function updateProgress() {
+            for (let i = 1; i <= 4; i++) {
+                const dot = document.getElementById('dot-' + i);
+                dot.classList.remove('active', 'done');
+                if (i < currentStep) dot.classList.add('done');
+                if (i === currentStep) dot.classList.add('active');
+            }
+            for (let i = 1; i <= 3; i++) {
+                const line = document.getElementById('line-' + i);
+                line.classList.toggle('done', i < currentStep);
+            }
+        }
+
+        function selectCrop(el) {
+            document.querySelectorAll('.crop-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedCrop = el.dataset.crop;
+            document.getElementById('hidden-cropName').value = selectedCrop;
+            document.getElementById('next-2').disabled = false;
+            selectedPest = null;
+            document.getElementById('hidden-pestName').value = '';
+        }
+
+        function buildPestGrid() {
+            const grid = document.getElementById('pest-grid');
+            grid.innerHTML = '';
+            const pests = cropPestMap[selectedCrop] || [];
+            pests.forEach(function(pest) {
+                const photoUrl = pestPhotoMap[pest] || '';
+                const card = document.createElement('div');
+                card.className = 'pest-card';
+                card.dataset.pest = pest;
+                card.onclick = function() { selectPest(this); };
+                card.innerHTML =
+                    '<img src="' + photoUrl + '" alt="' + pest + '" ' +
+                    'onerror="this.style.display=\'none\'">' +
+                    '<span class="pest-card-name">' + pest.replace(/\b\w/g, c => c.toUpperCase()) + '</span>';
+                grid.appendChild(card);
+            });
+            document.getElementById('next-3').disabled = true;
+        }
+
+        function selectPest(el) {
+            document.querySelectorAll('.pest-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPest = el.dataset.pest;
+            document.getElementById('hidden-pestName').value = selectedPest;
+            document.getElementById('next-3').disabled = false;
+        }
+    </script>
 </body>
 </html>
