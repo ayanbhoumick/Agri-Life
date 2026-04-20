@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriLife — Recommendation</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <span class="logo">🌾</span>
+        <div>
+            <h1>AgriLife</h1>
+            <p class="tagline">Pest Management &amp; Delivery Estimation</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>Recommendation Report</h2>
+
+            <div class="highlight-box">
+                <div class="label">Recommended Pesticide</div>
+                <div class="value" th:text="${recommendation}">—</div>
+                <div class="sub" th:text="'For: ' + ${farmer.pestName}">—</div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="label">Estimated Delivery Time</div>
+                <div class="value" th:text="${deliveryTime} + ' minutes'">—</div>
+                <div class="sub" th:text="${distance} + ' km at ' + ${speed} + ' km/h + 5 min verification'">—</div>
+                <div class="error-note" th:if="${deliveryError != null}" th:text="${deliveryError}"></div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="result-section">
+                <h3>Farmer Details</h3>
+                <div class="result-row">
+                    <span class="label">Name</span>
+                    <span class="value" th:text="${farmer.name}">—</span>
+                </div>
+                <div class="result-row">
+                    <span class="label">Phone</span>
+                    <span class="value" th:text="${farmer.phoneNumber}">—</span>
+                </div>
+                <div class="result-row">
+                    <span class="label">Pest Reported</span>
+                    <span class="value" th:text="${farmer.pestName}">—</span>
+                </div>
+            </div>
+
+            <a href="/" class="btn-secondary">← New Report</a>
+        </div>
+    </main>
+
+    <footer>
+        AgriLife Pest Management System &copy; 2026
+    </footer>
+</body>
+</html>
