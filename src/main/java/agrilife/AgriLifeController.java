@@ -12,12 +12,14 @@ public class AgriLifeController {
     private final PestService pestService;
     private final DeliveryService deliveryService;
     private final CropService cropService;
+    private final ReportService reportService;
 
     public AgriLifeController(PestService pestService, DeliveryService deliveryService,
-                               CropService cropService) {
+                               CropService cropService, ReportService reportService) {
         this.pestService = pestService;
         this.deliveryService = deliveryService;
         this.cropService = cropService;
+        this.reportService = reportService;
     }
 
     @GetMapping("/")
@@ -45,6 +47,8 @@ public class AgriLifeController {
             deliveryTime = deliveryService.calculateDeliveryTime(form.getDistance(), effectiveSpeed);
             deliveryError = "Invalid speed — defaulted to 30 km/h.";
         }
+
+        reportService.save(form, recommendation, deliveryTime, effectiveSpeed);
 
         model.addAttribute("farmer", farmer);
         model.addAttribute("cropName", form.getCropName());
