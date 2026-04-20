@@ -1,0 +1,48 @@
+package agrilife;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class AgriLifeController {
+
+    private final PestService pestService;
+    private final DeliveryService deliveryService;
+
+    public AgriLifeController(PestService pestService, DeliveryService deliveryService) {
+        this.pestService = pestService;
+        this.deliveryService = deliveryService;
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("farmerForm", new FarmerForm());
+        return "index";
+    }
+
+    @PostMapping("/recommend")
+    public String recommend(@ModelAttribute FarmerForm form, Model model) {
+        Farmer farmer = new Farmer(form.getName(), form.getPhone(), form.getPestName());
+        String recommendation = pestService.recommendPesticide(farmer.getPestName());
+
+        double deliveryTime;
+        String deliveryError = null;
+        try {
+            deliveryTime = deliveryService.calculateDeliveryTime(form.getDistance(), form.getSpeed());
+        } catch (IllegalArgumentException e) {
+            deliveryTime = deliveryService.calculateDeliveryTime(form.getDistance(), 30);
+            deliveryError = "Invalid speed — defaulted to 30 km/h.";
+        }
+
+        model.addAttribute("farmer", farmer);
+        model.addAttribute("recommendation", recommendation);
+        model.addAttribute("deliveryTime", String.format("%.1f", deliveryTime));
+        model.addAttribute("distance", form.getDistance());
+        model.addAttribute("speed", form.getSpeed());
+        model.addAttribute("deliveryError", deliveryError);
+        return "result";
+    }
+}
