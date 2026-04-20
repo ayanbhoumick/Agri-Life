@@ -29,9 +29,13 @@ public class WeatherService {
             if (results == null || results.isEmpty()) return null;
 
             Map<String, Object> place = results.get(0);
-            double lat = ((Number) place.get("latitude")).doubleValue();
-            double lng = ((Number) place.get("longitude")).doubleValue();
+            Number latNum = (Number) place.get("latitude");
+            Number lngNum = (Number) place.get("longitude");
+            if (latNum == null || lngNum == null) return null;
+            double lat = latNum.doubleValue();
+            double lng = lngNum.doubleValue();
             String resolvedName = (String) place.get("name");
+            if (resolvedName == null) resolvedName = city;
 
             String weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=" + lat
                 + "&longitude=" + lng
@@ -45,9 +49,13 @@ public class WeatherService {
             Map<String, Object> current = (Map<String, Object>) weatherResp.get("current");
             if (current == null) return null;
 
-            double temperature = ((Number) current.get("temperature_2m")).doubleValue();
-            double precipitation = ((Number) current.get("precipitation")).doubleValue();
-            int weatherCode = ((Number) current.get("weathercode")).intValue();
+            Number tempNum = (Number) current.get("temperature_2m");
+            Number precipNum = (Number) current.get("precipitation");
+            Number codeNum = (Number) current.get("weathercode");
+            if (tempNum == null || precipNum == null || codeNum == null) return null;
+            double temperature = tempNum.doubleValue();
+            double precipitation = precipNum.doubleValue();
+            int weatherCode = codeNum.intValue();
             List<String> riskPests = deriveRiskPests(temperature, precipitation);
 
             return new WeatherData(resolvedName, temperature, precipitation, weatherCode, riskPests);
