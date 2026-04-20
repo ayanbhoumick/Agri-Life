@@ -48,8 +48,8 @@
             <form th:action="@{/recommend}" th:object="${farmerForm}" method="post" id="wizard-form">
 
                 <!-- Hidden fields populated by JS -->
-                <input type="hidden" th:field="*{cropName}" id="hidden-cropName">
-                <input type="hidden" th:field="*{pestName}" id="hidden-pestName">
+                <input type="hidden" name="cropName" id="hidden-cropName">
+                <input type="hidden" name="pestName" id="hidden-pestName">
 
                 <!-- Step 1: Farmer Info -->
                 <div class="wizard-panel active" id="step-1">
@@ -57,15 +57,15 @@
                     <div class="form-group">
                         <label for="name">Farmer Name</label>
                         <input type="text" id="name" th:field="*{name}"
-                               placeholder="e.g. Rajesh Kumar">
+                               placeholder="e.g. Rajesh Kumar" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
                         <input type="tel" id="phone" th:field="*{phone}"
-                               placeholder="e.g. +91 98765 43210">
+                               placeholder="e.g. +91 98765 43210" required>
                     </div>
                     <div class="wizard-nav">
-                        <button type="button" class="btn-next" onclick="goStep(2)">Next →</button>
+                        <button type="button" class="btn-next" onclick="if(validateStep1()) goStep(2);">Next →</button>
                     </div>
                 </div>
 
@@ -75,7 +75,11 @@
                     <div class="crop-grid" id="crop-grid">
                         <div th:each="crop : ${crops}"
                              class="crop-card"
-                             th:attr="data-crop=${crop.name}, onclick='selectCrop(this)'">
+                             role="button"
+                             tabindex="0"
+                             th:attr="data-crop=${crop.name}"
+                             onclick="selectCrop(this)"
+                             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectCrop(this);}">
                             <span class="crop-emoji" th:text="${crop.emoji}">🌾</span>
                             <span class="crop-name" th:text="${crop.name}">Crop</span>
                         </div>
@@ -133,6 +137,12 @@
         let selectedCrop = null;
         let selectedPest = null;
 
+        function validateStep1() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            return name.length > 0 && phone.length > 0;
+        }
+
         function goStep(n) {
             document.getElementById('step-' + currentStep).classList.remove('active');
             currentStep = n;
@@ -174,10 +184,22 @@
                 card.className = 'pest-card';
                 card.dataset.pest = pest;
                 card.onclick = function() { selectPest(this); };
-                card.innerHTML =
-                    '<img src="' + photoUrl + '" alt="' + pest + '" ' +
-                    'onerror="this.style.display=\'none\'">' +
-                    '<span class="pest-card-name">' + pest.replace(/\b\w/g, c => c.toUpperCase()) + '</span>';
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPest(this); }
+                });
+                const img = document.createElement('img');
+                img.setAttribute('src', photoUrl);
+                img.setAttribute('alt', pest);
+                img.onerror = function() { this.style.display = 'none'; };
+
+                const span = document.createElement('span');
+                span.className = 'pest-card-name';
+                span.textContent = pest.replace(/\b\w/g, c => c.toUpperCase());
+
+                card.appendChild(img);
+                card.appendChild(span);
                 grid.appendChild(card);
             });
             document.getElementById('next-3').disabled = true;
