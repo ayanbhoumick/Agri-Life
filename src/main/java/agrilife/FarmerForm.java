@@ -4,6 +4,7 @@ public class FarmerForm {
 
     private String name;
     private String phone;
+    private String cropName;
     private String pestName;
     private double distance;
     private double speed;
@@ -13,6 +14,9 @@ public class FarmerForm {
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+
+    public String getCropName() { return cropName; }
+    public void setCropName(String cropName) { this.cropName = cropName; }
 
     public String getPestName() { return pestName; }
     public void setPestName(String pestName) { this.pestName = pestName; }

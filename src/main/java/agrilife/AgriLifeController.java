@@ -11,15 +11,21 @@ public class AgriLifeController {
 
     private final PestService pestService;
     private final DeliveryService deliveryService;
+    private final CropService cropService;
 
-    public AgriLifeController(PestService pestService, DeliveryService deliveryService) {
+    public AgriLifeController(PestService pestService, DeliveryService deliveryService,
+                               CropService cropService) {
         this.pestService = pestService;
         this.deliveryService = deliveryService;
+        this.cropService = cropService;
     }
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("farmerForm", new FarmerForm());
+        model.addAttribute("crops", cropService.getAllCrops());
+        model.addAttribute("cropPestMap", cropService.getCropPestMap());
+        model.addAttribute("pestPhotoMap", pestService.getPestPhotoMap());
         return "index";
     }
 
@@ -27,6 +33,7 @@ public class AgriLifeController {
     public String recommend(@ModelAttribute FarmerForm form, Model model) {
         Farmer farmer = new Farmer(form.getName(), form.getPhone(), form.getPestName());
         String recommendation = pestService.recommendPesticide(farmer.getPestName());
+        String pestPhotoUrl = pestService.getPhotoUrl(farmer.getPestName());
 
         double deliveryTime;
         String deliveryError = null;
@@ -38,7 +45,9 @@ public class AgriLifeController {
         }
 
         model.addAttribute("farmer", farmer);
+        model.addAttribute("cropName", form.getCropName());
         model.addAttribute("recommendation", recommendation);
+        model.addAttribute("pestPhotoUrl", pestPhotoUrl);
         model.addAttribute("deliveryTime", String.format("%.1f", deliveryTime));
         model.addAttribute("distance", form.getDistance());
         model.addAttribute("speed", form.getSpeed());
