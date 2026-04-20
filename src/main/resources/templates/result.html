@@ -19,12 +19,25 @@
         <div class="card">
             <h2>Recommendation Report</h2>
 
+            <!-- Pest photo -->
+            <img th:if="${pestPhotoUrl != null and !pestPhotoUrl.isEmpty()}"
+                 th:src="${pestPhotoUrl}"
+                 th:alt="${farmer.pestName}"
+                 class="pest-photo-result"
+                 onerror="this.style.display='none'">
+
+            <!-- Crop badge -->
+            <span class="crop-badge" th:if="${cropName != null and !cropName.isEmpty()}"
+                  th:text="'Crop: ' + ${cropName}">Crop</span>
+
+            <!-- Pesticide recommendation highlight -->
             <div class="highlight-box">
                 <div class="label">Recommended Pesticide</div>
                 <div class="value" th:text="${recommendation}">—</div>
                 <div class="sub" th:text="'For: ' + ${farmer.pestName}">—</div>
             </div>
 
+            <!-- Delivery estimate highlight -->
             <div class="highlight-box">
                 <div class="label">Estimated Delivery Time</div>
                 <div class="value" th:text="${deliveryTime} + ' minutes'">—</div>
@@ -34,6 +47,7 @@
 
             <hr class="divider">
 
+            <!-- Farmer details -->
             <div class="result-section">
                 <h3>Farmer Details</h3>
                 <div class="result-row">
