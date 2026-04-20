@@ -13,13 +13,16 @@ public class AgriLifeController {
     private final DeliveryService deliveryService;
     private final CropService cropService;
     private final ReportService reportService;
+    private final WeatherService weatherService;
 
     public AgriLifeController(PestService pestService, DeliveryService deliveryService,
-                               CropService cropService, ReportService reportService) {
+                               CropService cropService, ReportService reportService,
+                               WeatherService weatherService) {
         this.pestService = pestService;
         this.deliveryService = deliveryService;
         this.cropService = cropService;
         this.reportService = reportService;
+        this.weatherService = weatherService;
     }
 
     @GetMapping("/")
@@ -50,6 +53,12 @@ public class AgriLifeController {
 
         reportService.save(form, recommendation, deliveryTime, effectiveSpeed);
 
+        WeatherData weatherData = null;
+        String location = form.getLocation();
+        if (location != null && !location.trim().isEmpty()) {
+            weatherData = weatherService.getWeather(location.trim());
+        }
+
         model.addAttribute("farmer", farmer);
         model.addAttribute("cropName", form.getCropName());
         model.addAttribute("recommendation", recommendation);
@@ -58,6 +67,10 @@ public class AgriLifeController {
         model.addAttribute("distance", form.getDistance());
         model.addAttribute("speed", effectiveSpeed);
         model.addAttribute("deliveryError", deliveryError);
+        model.addAttribute("weatherData", weatherData);
+        model.addAttribute("totalReports", reportService.getTotalCount());
+        model.addAttribute("mostCommonPest", reportService.getMostCommonPest());
+        model.addAttribute("avgDeliveryTime", String.format("%.1f", reportService.getAvgDeliveryTime()));
         return "result";
     }
 }
