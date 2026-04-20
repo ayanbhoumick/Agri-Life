@@ -19,12 +19,14 @@ public class ReportRecord {
     private double deliveryTime;
     private double distance;
     private double speed;
+    private String location;
     private LocalDateTime createdAt;
 
     protected ReportRecord() {}
 
     public ReportRecord(String farmerName, String phone, String cropName, String pestName,
-                        String pesticide, double deliveryTime, double distance, double speed) {
+                        String pesticide, double deliveryTime, double distance, double speed,
+                        String location) {
         this.farmerName = farmerName;
         this.phone = phone;
         this.cropName = cropName;
@@ -33,6 +35,7 @@ public class ReportRecord {
         this.deliveryTime = deliveryTime;
         this.distance = distance;
         this.speed = speed;
+        this.location = location;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -45,5 +48,6 @@ public class ReportRecord {
     public double getDeliveryTime() { return deliveryTime; }
     public double getDistance() { return distance; }
     public double getSpeed() { return speed; }
+    public String getLocation() { return location; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }
