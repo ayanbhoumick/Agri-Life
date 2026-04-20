@@ -53,4 +53,45 @@ class PestServiceTest {
         String result = service.recommendPesticide(null);
         assertTrue(result.contains("No pest information"));
     }
+
+    @Test
+    void brown_planthopper_returns_buprofezin() {
+        assertEquals("Buprofezin", service.recommendPesticide("brown planthopper"));
+    }
+
+    @Test
+    void stem_borer_returns_chlorantraniliprole() {
+        assertEquals("Chlorantraniliprole", service.recommendPesticide("stem borer"));
+    }
+
+    @Test
+    void bollworm_returns_emamectin_benzoate() {
+        assertEquals("Emamectin Benzoate", service.recommendPesticide("bollworm"));
+    }
+
+    @Test
+    void leaf_folder_returns_cartap_hydrochloride() {
+        assertEquals("Cartap Hydrochloride", service.recommendPesticide("leaf folder"));
+    }
+
+    @Test
+    void jassid_returns_dimethoate() {
+        assertEquals("Dimethoate", service.recommendPesticide("jassid"));
+    }
+
+    @Test
+    void getPhotoUrl_returns_non_null_for_known_pest() {
+        assertNotNull(service.getPhotoUrl("aphids"));
+        assertFalse(service.getPhotoUrl("aphids").isEmpty());
+    }
+
+    @Test
+    void getPhotoUrl_returns_empty_for_unknown_pest() {
+        assertEquals("", service.getPhotoUrl("dragon"));
+    }
+
+    @Test
+    void getAllPestNames_returns_twelve_pests() {
+        assertEquals(12, service.getAllPestNames().size());
+    }
 }
