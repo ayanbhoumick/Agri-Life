@@ -36,11 +36,13 @@ public class AgriLifeController {
         String pestPhotoUrl = pestService.getPhotoUrl(farmer.getPestName());
 
         double deliveryTime;
+        double effectiveSpeed = form.getSpeed();
         String deliveryError = null;
         try {
             deliveryTime = deliveryService.calculateDeliveryTime(form.getDistance(), form.getSpeed());
         } catch (IllegalArgumentException e) {
-            deliveryTime = deliveryService.calculateDeliveryTime(form.getDistance(), 30);
+            effectiveSpeed = 30;
+            deliveryTime = deliveryService.calculateDeliveryTime(form.getDistance(), effectiveSpeed);
             deliveryError = "Invalid speed — defaulted to 30 km/h.";
         }
 
@@ -50,7 +52,7 @@ public class AgriLifeController {
         model.addAttribute("pestPhotoUrl", pestPhotoUrl);
         model.addAttribute("deliveryTime", String.format("%.1f", deliveryTime));
         model.addAttribute("distance", form.getDistance());
-        model.addAttribute("speed", form.getSpeed());
+        model.addAttribute("speed", effectiveSpeed);
         model.addAttribute("deliveryError", deliveryError);
         return "result";
     }
