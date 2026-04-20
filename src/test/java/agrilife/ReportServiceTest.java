@@ -67,4 +67,29 @@ class ReportServiceTest {
     void empty_db_returns_empty_list() {
         assertTrue(service.getAllReports().isEmpty());
     }
+
+    @Test
+    void getTotalCount_returns_zero_when_empty() {
+        assertEquals(0, service.getTotalCount());
+    }
+
+    @Test
+    void getMostCommonPest_returns_none_when_empty() {
+        assertEquals("None", service.getMostCommonPest());
+    }
+
+    @Test
+    void getMostCommonPest_returns_most_frequent_pest() {
+        service.save(makeForm("A", "Rice", "aphids"), "Imidacloprid", 20.0, 40.0);
+        service.save(makeForm("B", "Rice", "aphids"), "Imidacloprid", 20.0, 40.0);
+        service.save(makeForm("C", "Wheat", "locusts"), "Chlorpyrifos", 25.0, 40.0);
+        assertEquals("aphids", service.getMostCommonPest());
+    }
+
+    @Test
+    void getAvgDeliveryTime_returns_correct_average() {
+        service.save(makeForm("A", "Rice", "aphids"), "Imidacloprid", 20.0, 40.0);
+        service.save(makeForm("B", "Wheat", "locusts"), "Chlorpyrifos", 30.0, 40.0);
+        assertEquals(25.0, service.getAvgDeliveryTime(), 0.01);
+    }
 }
