@@ -35,6 +35,7 @@ public class ReportService {
         List<ReportRecord> records = repository.findAll();
         if (records.isEmpty()) return "None";
         return records.stream()
+            .filter(r -> r.getPestName() != null)
             .collect(Collectors.groupingBy(ReportRecord::getPestName, Collectors.counting()))
             .entrySet().stream()
             .max(Map.Entry.comparingByValue())
