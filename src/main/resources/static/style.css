@@ -616,3 +616,105 @@ footer {
 .report-history-link:hover {
     text-decoration: underline;
 }
+
+/* ── Optional label (used in Step 1 location field) ── */
+.optional-label {
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: #9a9080;
+}
+
+/* ── Weather Card ── */
+.weather-card {
+    background: linear-gradient(135deg, #e8f4fd 0%, #f0f8e8 100%);
+    border: 1px solid #b4ddb4;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.weather-icon {
+    font-size: 1.4rem;
+}
+
+.weather-city {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1e4620;
+}
+
+.weather-conditions {
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.weather-sep {
+    margin: 0 6px;
+    color: #9a9080;
+}
+
+.weather-risk {
+    font-size: 0.85rem;
+    color: #8b4513;
+    font-weight: 600;
+    background: #fff8e8;
+    border: 1px solid #f0d080;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+.risk-label {
+    margin-right: 4px;
+}
+
+.weather-no-risk {
+    font-size: 0.85rem;
+    color: #2d7a32;
+    font-weight: 600;
+}
+
+/* ── Stats Row ── */
+.stats-row {
+    display: flex;
+    gap: 0;
+    border: 1px solid #e0d8cc;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.stat-item {
+    flex: 1;
+    padding: 14px 12px;
+    text-align: center;
+    border-right: 1px solid #e0d8cc;
+}
+
+.stat-item:last-child {
+    border-right: none;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e4620;
+    margin-bottom: 2px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #9a9080;
+}
