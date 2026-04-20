@@ -1,0 +1,238 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f5f0e8;
+    color: #2c2c2c;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #1e4620;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+header .logo {
+    font-size: 2rem;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+
+header p.tagline {
+    font-size: 0.85rem;
+    color: #a8d5a2;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 24px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 560px;
+}
+
+.card h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e4620;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e8e0d0;
+    letter-spacing: -0.3px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #d0c9bb;
+    border-radius: 7px;
+    font-size: 0.97rem;
+    color: #2c2c2c;
+    background-color: #fdfaf5;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2d7a32;
+    box-shadow: 0 0 0 3px rgba(45, 122, 50, 0.15);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    background-color: #2d7a32;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 28px;
+    letter-spacing: 0.2px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+    background-color: #236227;
+}
+
+.btn-primary:active {
+    transform: scale(0.99);
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: transparent;
+    color: #2d7a32;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 2px solid #2d7a32;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+    margin-top: 24px;
+}
+
+.btn-secondary:hover {
+    background-color: #2d7a32;
+    color: #ffffff;
+}
+
+.result-section {
+    margin-bottom: 28px;
+}
+
+.result-section h3 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #7a6a4a;
+    margin-bottom: 12px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px solid #f0ebe0;
+    font-size: 0.95rem;
+}
+
+.result-row:last-child {
+    border-bottom: none;
+}
+
+.result-row .label {
+    color: #6b6b6b;
+    font-weight: 500;
+}
+
+.result-row .value {
+    color: #1e1e1e;
+    font-weight: 600;
+    text-align: right;
+}
+
+.highlight-box {
+    background: linear-gradient(135deg, #eaf5ea 0%, #f5f9f0 100%);
+    border: 1.5px solid #b4ddb4;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+}
+
+.highlight-box .label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #3a7a3a;
+    margin-bottom: 6px;
+}
+
+.highlight-box .value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1e4620;
+}
+
+.highlight-box .sub {
+    font-size: 0.82rem;
+    color: #5a8a5a;
+    margin-top: 4px;
+}
+
+.error-note {
+    font-size: 0.82rem;
+    color: #b85c00;
+    margin-top: 8px;
+}
+
+.divider {
+    border: none;
+    border-top: 1.5px solid #e8e0d0;
+    margin: 24px 0;
+}
+
+footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 0.78rem;
+    color: #9a9080;
+    background-color: #ede8de;
+}
