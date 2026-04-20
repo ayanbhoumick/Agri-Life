@@ -236,3 +236,255 @@ footer {
     color: #9a9080;
     background-color: #ede8de;
 }
+
+/* ── Wizard Progress Bar ── */
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 32px;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #d0c9bb;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+.step-dot.active {
+    background-color: #2d7a32;
+}
+
+.step-dot.done {
+    background-color: #1e4620;
+}
+
+.step-line {
+    width: 48px;
+    height: 2px;
+    background-color: #d0c9bb;
+    transition: background-color 0.3s;
+}
+
+.step-line.done {
+    background-color: #2d7a32;
+}
+
+.step-label {
+    font-size: 0.7rem;
+    color: #9a9080;
+    text-align: center;
+    margin-top: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.progress-wrapper {
+    margin-bottom: 28px;
+}
+
+.progress-wrapper .steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-wrapper .labels-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0px;
+    margin-top: 6px;
+}
+
+/* ── Wizard Panels ── */
+.wizard-panel {
+    display: none;
+}
+
+.wizard-panel.active {
+    display: block;
+}
+
+/* ── Crop Cards ── */
+.crop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.crop-card {
+    border: 2px solid #e0d8cc;
+    border-radius: 10px;
+    padding: 16px 8px;
+    text-align: center;
+    cursor: pointer;
+    background: #fdfaf5;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.1s;
+    user-select: none;
+}
+
+.crop-card:hover {
+    border-color: #2d7a32;
+    background: #f0f8f0;
+}
+
+.crop-card.selected {
+    border-color: #2d7a32;
+    background: #eaf5ea;
+    box-shadow: 0 0 0 3px rgba(45, 122, 50, 0.15);
+}
+
+.crop-card:active {
+    transform: scale(0.97);
+}
+
+.crop-emoji {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.crop-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/* ── Pest Photo Cards ── */
+.pest-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.pest-card {
+    border: 2px solid #e0d8cc;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    background: #fdfaf5;
+    transition: border-color 0.2s, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+}
+
+.pest-card:hover {
+    border-color: #2d7a32;
+    background: #f0f8f0;
+}
+
+.pest-card.selected {
+    border-color: #2d7a32;
+    background: #eaf5ea;
+    box-shadow: 0 0 0 3px rgba(45, 122, 50, 0.15);
+}
+
+.pest-card img {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background-color: #e8e0d0;
+}
+
+.pest-card-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    text-transform: capitalize;
+}
+
+/* ── Wizard Nav Buttons ── */
+.wizard-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-back {
+    padding: 11px 20px;
+    background: transparent;
+    color: #6b6b6b;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1.5px solid #d0c9bb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-back:hover {
+    border-color: #9a9080;
+    color: #2c2c2c;
+}
+
+.btn-next {
+    flex: 1;
+    padding: 12px;
+    background-color: #2d7a32;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-next:hover {
+    background-color: #236227;
+}
+
+.btn-next:disabled {
+    background-color: #a8c5a8;
+    cursor: not-allowed;
+}
+
+/* ── Result page pest photo ── */
+.pest-photo-result {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.crop-badge {
+    display: inline-block;
+    background: #eaf5ea;
+    color: #1e4620;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    border: 1px solid #b4ddb4;
+}
