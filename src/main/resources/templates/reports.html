@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriLife — Report History</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <span class="logo">🌾</span>
+        <div>
+            <h1>AgriLife</h1>
+            <p class="tagline">Pest Management &amp; Delivery Estimation</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+
+            <div class="report-title-row">
+                <h2>Report History</h2>
+                <span class="report-count"
+                      th:text="${reports.size()} + (${reports.size()} == 1 ? ' report' : ' reports')">0 reports</span>
+            </div>
+
+            <!-- Empty state -->
+            <div th:if="${reports.isEmpty()}" class="report-empty">
+                No reports yet.
+                <a th:href="@{/}">Submit your first report →</a>
+            </div>
+
+            <!-- Report table -->
+            <div th:if="${!reports.isEmpty()}" class="report-table">
+                <div class="report-header-row">
+                    <span>Farmer</span>
+                    <span>Crop</span>
+                    <span>Pest</span>
+                    <span>Pesticide</span>
+                    <span>Time</span>
+                    <span>Date</span>
+                </div>
+                <div th:each="r, stat : ${reports}"
+                     th:classappend="${stat.even} ? 'even' : ''"
+                     class="report-row"
+                     th:attr="onclick='toggleRow(' + ${r.id} + ')'">
+                    <div class="report-row-summary">
+                        <span th:text="${r.farmerName}">—</span>
+                        <span th:text="${r.cropName}">—</span>
+                        <span th:text="${r.pestName}">—</span>
+                        <span class="report-pesticide" th:text="${r.pesticide}">—</span>
+                        <span th:text="${#numbers.formatDecimal(r.deliveryTime, 1, 1)} + ' min'">—</span>
+                        <span th:text="${#temporals.format(r.createdAt, 'dd MMM')}">—</span>
+                    </div>
+                    <div class="detail-panel" th:id="'detail-' + ${r.id}">
+                        <div class="detail-grid">
+                            <span class="label">Phone</span>
+                            <span th:text="${r.phone}">—</span>
+                            <span class="label">Distance</span>
+                            <span th:text="${r.distance} + ' km'">—</span>
+                            <span class="label">Speed</span>
+                            <span th:text="${r.speed} + ' km/h'">—</span>
+                            <span class="label">Submitted</span>
+                            <span th:text="${#temporals.format(r.createdAt, 'dd MMM yyyy, HH:mm')}">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a th:href="@{/}" class="btn-secondary">← New Report</a>
+
+        </div>
+    </main>
+
+    <footer>
+        AgriLife Pest Management System &copy; 2026
+    </footer>
+
+    <script>
+        function toggleRow(id) {
+            const detail = document.getElementById('detail-' + id);
+            detail.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>
