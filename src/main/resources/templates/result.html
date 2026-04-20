@@ -61,7 +61,7 @@
                 <div class="weather-risk" th:if="${!weatherData.riskPests.isEmpty()}">
                     <span class="risk-label">⚠ High-Risk Pests:</span>
                     <span th:each="pest, stat : ${weatherData.riskPests}"
-                          th:text="${pest} + (${stat.last} ? '' : ' · ')">—</span>
+                          th:text="${pest + (stat.last ? '' : ' · ')}">—</span>
                 </div>
                 <div class="weather-no-risk" th:if="${weatherData.riskPests.isEmpty()}">
                     ✓ No high-risk pests for current conditions
