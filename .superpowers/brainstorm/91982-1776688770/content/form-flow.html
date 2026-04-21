@@ -1,0 +1,40 @@
+<h2>How should the form flow work?</h2>
+<p class="subtitle">Pick the approach that feels right for farmers using this app</p>
+
+<div class="options">
+  <div class="option" data-choice="wizard" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Multi-step Wizard</h3>
+      <p>Step 1: Farmer info → Step 2: Select crop → Step 3: Select pest (filtered) → Step 4: Delivery → Result. Progress bar at top. Each step on its own screen.</p>
+      <div style="display:flex;gap:6px;margin-top:10px;font-size:0.75rem">
+        <span style="background:#e8f5e9;color:#2d7a32;padding:3px 8px;border-radius:4px;font-weight:600">① Info</span>
+        <span style="color:#aaa">→</span>
+        <span style="background:#e8f5e9;color:#2d7a32;padding:3px 8px;border-radius:4px;font-weight:600">② Crop</span>
+        <span style="color:#aaa">→</span>
+        <span style="background:#e8f5e9;color:#2d7a32;padding:3px 8px;border-radius:4px;font-weight:600">③ Pest</span>
+        <span style="color:#aaa">→</span>
+        <span style="background:#e8f5e9;color:#2d7a32;padding:3px 8px;border-radius:4px;font-weight:600">④ Delivery</span>
+      </div>
+      <div style="margin-top:8px;font-size:0.8rem;color:#666">Feels premium. More taps but very guided.</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="dynamic" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Single Page — Dynamic Filter</h3>
+      <p>Same one-page form. User picks crop first — pest dropdown instantly filters to only relevant pests. Fast, minimal clicks. Add pest images as tooltips.</p>
+      <div style="margin-top:10px;font-size:0.8rem;color:#666">Fastest path. Keeps current feel, just smarter. No page reloads.</div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="twostep" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Two Pages — Crop First</h3>
+      <p>Landing page: pick crop (with big icon cards). Then original form loads with only relevant pests pre-filtered. Visual and guided without full wizard complexity.</p>
+      <div style="margin-top:10px;font-size:0.8rem;color:#2d7a32;font-weight:600">⭐ Recommended — visual impact + simplicity</div>
+    </div>
+  </div>
+</div>
