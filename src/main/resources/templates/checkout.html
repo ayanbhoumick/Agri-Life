@@ -94,7 +94,7 @@
             </div>
 
             <div class="checkout-nav">
-                <a th:href="@{/checkout(reportId=${report.id})}" class="btn-secondary"
+                <a th:href="@{/checkout(reportId=${report.id},success=true)}" class="btn-secondary"
                    th:if="${success}">View Order</a>
                 <a th:href="@{/}" class="report-history-link">← New Report</a>
                 <a th:href="@{/payments}" class="report-history-link">Payment History →</a>
