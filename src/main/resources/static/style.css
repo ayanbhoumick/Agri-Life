@@ -795,7 +795,7 @@ footer {
 /* --- Payments history page --- */
 
 .payments-header-row {
-    grid-template-columns: 1.4fr 1.2fr 1.4fr 0.9fr 0.9fr 0.7fr !important;
+    grid-template-columns: 1.4fr 1.2fr 1.4fr 0.9fr 0.9fr 0.7fr;
 }
 
 .payments-row .report-row-summary,
@@ -804,12 +804,16 @@ footer {
     grid-template-columns: 1.4fr 1.2fr 1.4fr 0.9fr 0.9fr 0.7fr;
     gap: 8px;
     align-items: center;
-    padding: 12px 0;
+    padding: 12px 16px;
     font-size: 0.93rem;
 }
 
 .payments-row {
     cursor: default;
+}
+
+.payments-row:hover .report-row-summary {
+    background: inherit;
 }
 
 .paid-badge {
