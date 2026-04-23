@@ -13,9 +13,6 @@ class PaymentServiceTest {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    @Autowired
-    private ReportRepository reportRepository;
-
     private PaymentService service;
 
     @BeforeEach
