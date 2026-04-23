@@ -51,7 +51,7 @@ public class AgriLifeController {
             deliveryError = "Invalid speed — defaulted to 30 km/h.";
         }
 
-        reportService.save(form, recommendation, deliveryTime, effectiveSpeed);
+        ReportRecord savedReport = reportService.save(form, recommendation, deliveryTime, effectiveSpeed);
 
         WeatherData weatherData = null;
         String location = form.getLocation();
@@ -71,6 +71,7 @@ public class AgriLifeController {
         model.addAttribute("totalReports", reportService.getTotalCount());
         model.addAttribute("mostCommonPest", reportService.getMostCommonPest());
         model.addAttribute("avgDeliveryTime", String.format("%.1f", reportService.getAvgDeliveryTime()));
+        model.addAttribute("reportId", savedReport.getId());
         return "result";
     }
 }

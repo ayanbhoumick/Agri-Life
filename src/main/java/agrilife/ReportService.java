@@ -15,12 +15,12 @@ public class ReportService {
         this.repository = repository;
     }
 
-    public void save(FarmerForm form, String pesticide, double deliveryTime, double effectiveSpeed) {
+    public ReportRecord save(FarmerForm form, String pesticide, double deliveryTime, double effectiveSpeed) {
         ReportRecord record = new ReportRecord(
             form.getName(), form.getPhone(), form.getCropName(), form.getPestName(),
             pesticide, deliveryTime, form.getDistance(), effectiveSpeed, form.getLocation()
         );
-        repository.save(record);
+        return repository.save(record);
     }
 
     public List<ReportRecord> getAllReports() {
