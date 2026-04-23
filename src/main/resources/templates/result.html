@@ -101,10 +101,12 @@
                 </div>
             </div>
 
-            <a th:href="@{/}" class="btn-secondary">← New Report</a>
             <div class="result-nav-links">
-                <a th:href="@{/reports}" class="report-history-link">View All Reports →</a>
-                <a th:href="@{/checkout(reportId=${reportId})}" class="checkout-link">Proceed to Checkout →</a>
+                <a th:href="@{/}" class="btn-secondary">← New Report</a>
+                <div class="result-nav-right">
+                    <a th:href="@{/reports}" class="report-history-link">View All Reports →</a>
+                    <a th:href="@{/checkout(reportId=${reportId})}" class="checkout-link">Proceed to Checkout →</a>
+                </div>
             </div>
         </div>
     </main>

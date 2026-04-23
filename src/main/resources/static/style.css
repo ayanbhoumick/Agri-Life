@@ -832,10 +832,22 @@ footer {
 
 .result-nav-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 4px;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.result-nav-links .btn-secondary {
+    margin-top: 0;
+}
+
+.result-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .checkout-link {
