@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriLife — Payment History</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <span class="logo">🌾</span>
+        <div>
+            <h1>AgriLife</h1>
+            <p class="tagline">Pest Management &amp; Delivery Estimation</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="report-title-row">
+                <h2>Payment History</h2>
+                <span class="report-count"
+                      th:text="${payments.size()} + (${payments.size()} == 1 ? ' payment' : ' payments')">
+                    0 payments
+                </span>
+            </div>
+
+            <!-- Empty state -->
+            <div th:if="${payments.isEmpty()}" class="report-empty">
+                No payments yet.
+                <a th:href="@{/}">Submit a report to get started →</a>
+            </div>
+
+            <!-- Payments table -->
+            <div th:if="${!payments.isEmpty()}" class="report-table">
+                <div class="report-header-row payments-header-row">
+                    <span>Date</span>
+                    <span>Farmer</span>
+                    <span>Pesticide</span>
+                    <span>Delivery</span>
+                    <span>Total</span>
+                    <span>Status</span>
+                </div>
+                <div th:each="p, stat : ${payments}"
+                     th:classappend="${stat.even} ? 'even' : ''"
+                     class="report-row payments-row">
+                    <div class="report-row-summary payments-row-summary">
+                        <span th:text="${#temporals.format(p.paidAt, 'dd MMM yyyy')}">—</span>
+                        <span th:text="${p.farmerName}">—</span>
+                        <span th:text="${p.pesticide}">—</span>
+                        <span th:text="'₹' + ${#numbers.formatDecimal(p.deliveryCost, 1, 0)}">—</span>
+                        <span class="order-total-value" th:text="'₹' + ${#numbers.formatDecimal(p.total, 1, 0)}">—</span>
+                        <span class="paid-badge" th:text="${p.status}">PAID</span>
+                    </div>
+                </div>
+            </div>
+
+            <a th:href="@{/}" class="btn-secondary">← New Report</a>
+            <a th:href="@{/reports}" class="report-history-link">View Reports →</a>
+        </div>
+    </main>
+
+    <footer>
+        AgriLife Pest Management System &copy; 2026
+    </footer>
+</body>
+</html>
