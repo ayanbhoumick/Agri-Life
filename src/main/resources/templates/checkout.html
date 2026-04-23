@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriLife — Checkout</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <span class="logo">🌾</span>
+        <div>
+            <h1>AgriLife</h1>
+            <p class="tagline">Pest Management &amp; Delivery Estimation</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>Checkout</h2>
+
+            <!-- Success banner -->
+            <div class="success-banner" th:if="${success}">
+                ✅ Payment successful! Your order has been placed.
+            </div>
+
+            <!-- Order Summary -->
+            <div class="checkout-section">
+                <h3 class="checkout-section-title">Order Summary</h3>
+                <div class="order-line">
+                    <span class="order-label">Farmer</span>
+                    <span class="order-value" th:text="${report.farmerName}">—</span>
+                </div>
+                <div class="order-line">
+                    <span class="order-label">Crop</span>
+                    <span class="order-value" th:text="${report.cropName}">—</span>
+                </div>
+                <div class="order-line">
+                    <span class="order-label">Pest</span>
+                    <span class="order-value" th:text="${report.pestName}">—</span>
+                </div>
+                <div class="order-line">
+                    <span class="order-label" th:text="${report.pesticide}">Pesticide</span>
+                    <span class="order-value" th:text="'₹' + ${#numbers.formatDecimal(pesticidePrice, 1, 0)}">—</span>
+                </div>
+                <div class="order-line">
+                    <span class="order-label" th:text="'Delivery (' + ${report.distance} + ' km)'">Delivery</span>
+                    <span class="order-value" th:text="'₹' + ${#numbers.formatDecimal(deliveryCost, 1, 0)}">—</span>
+                </div>
+                <div class="order-total-line">
+                    <span class="order-label">Total</span>
+                    <span class="order-total-value" th:text="'₹' + ${#numbers.formatDecimal(total, 1, 0)}">—</span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Payment Form -->
+            <div class="checkout-section" th:if="${!success}">
+                <h3 class="checkout-section-title">Payment Details</h3>
+                <form th:action="@{/checkout}" method="post">
+                    <input type="hidden" name="reportId" th:value="${report.id}">
+
+                    <div class="form-group">
+                        <label for="cardholderName">Cardholder Name</label>
+                        <input type="text" id="cardholderName" name="cardholderName"
+                               placeholder="As shown on card" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" name="cardNumber"
+                               placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry">Expiry (MM/YY)</label>
+                            <input type="text" id="expiry" name="expiry"
+                                   placeholder="MM/YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv"
+                                   placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary"
+                            th:text="'Pay ₹' + ${#numbers.formatDecimal(total, 1, 0)}">
+                        Pay
+                    </button>
+                </form>
+            </div>
+
+            <div class="checkout-nav">
+                <a th:href="@{/checkout(reportId=${report.id})}" class="btn-secondary"
+                   th:if="${success}">View Order</a>
+                <a th:href="@{/}" class="report-history-link">← New Report</a>
+                <a th:href="@{/payments}" class="report-history-link">Payment History →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        AgriLife Pest Management System &copy; 2026
+    </footer>
+</body>
+</html>
